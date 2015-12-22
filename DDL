@@ -1,0 +1,22 @@
+CREATE TABLE `event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `title` varchar(20) DEFAULT NULL,
+  `room` varchar(20) DEFAULT NULL,
+  `descri` varchar(255) DEFAULT NULL,
+  `promotor_name` varchar(10) DEFAULT NULL,
+  `promotor_mail` varchar(255) DEFAULT NULL,
+  `agenda` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8
+
+CREATE TABLE `participate_history` (
+  `id` int(11) DEFAULT NULL,
+  `participant_name` varchar(255) DEFAULT NULL,
+  KEY `id` (`id`),
+  CONSTRAINT `participate_history_ibfk_1` FOREIGN KEY (`id`) REFERENCES `event` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
