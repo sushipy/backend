@@ -11,12 +11,11 @@ CREATE TABLE `event` (
   `note` varchar(255) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `participate_history` (
   `id` int(11) DEFAULT NULL,
   `participant_name` varchar(255) DEFAULT NULL,
   KEY `id` (`id`),
   CONSTRAINT `participate_history_ibfk_1` FOREIGN KEY (`id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
