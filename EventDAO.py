@@ -42,6 +42,8 @@ class Event:
         'descri',
         'promotor_name',
         'promotor_mail',
+        'agenda',
+        'note',
         'capacity'
         ]
 
