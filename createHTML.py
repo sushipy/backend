@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import random
 
 class createHTML:
 
@@ -20,7 +21,10 @@ class createHTML:
 		response += '    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>\n'
 		response += '<style type="text/css" media="screen, projection">\n'
 		response += 'html {\n'
-		response += '  background: url(http://file.www.appkids.net/SBhrN.jpg) no-repeat center center fixed;\n'
+                gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
+                gazou = random.choice(gazoulist)
+		#response += '  background: url(http://file.www.appkids.net/SBhrN.jpg) no-repeat center center fixed;\n'
+		response += '  background: url(%s) no-repeat center center fixed;\n' % gazou
 		response += '  -webkit-background-size: cover;\n'
 		response += '  -moz-background-size: cover;\n'
 		response += '  -o-background-size: cover;\n'
@@ -284,7 +288,9 @@ class createHTML:
 		response1 += '    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>\n'
 		response1 += '<style type="text/css" media="screen, projection">\n'
 		response1 += 'html {\n'
-		response1 += '  background: url(http://file.www.appkids.net/SBhrN.jpg) no-repeat center center fixed;\n'
+                gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
+                gazou = random.choice(gazoulist)
+		response1 += '  background: url(%s) no-repeat center center fixed;\n' % gazou
 		response1 += '  -webkit-background-size: cover;\n'
 		response1 += '  -moz-background-size: cover;\n'
 		response1 += '  -o-background-size: cover;\n'
