@@ -388,7 +388,8 @@ class createHTML:
 		response1 += '    $.ajax({\n'
 		response1 += '      type: "post",\n'
 		###response1 += '      url: "http://192.168.56.155:8001/events/%s",\n' %eventID
-		response1 += '      url: "http://10.194.23.240:8001/events/%s",\n' %eventID
+		###response1 += '      url: "http://10.194.23.240:8001/events/%s",\n' %eventID
+		response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'

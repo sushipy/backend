@@ -36,10 +36,22 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             event.end_time = date + " " + ftime
 
             event.save()
-            print "create"
             self.send_response(200)
             self.end_headers()
-            print "Create OK"
+
+        elif 'events' in parsed_path.path:
+            content_len = int(self.headers.get('content-length'))
+            requestBody = self.rfile.read(content_len).decode('UTF-8')
+            eList = json.loads(requestBody)
+
+            event_id = int(eList['event_id'])
+            promotor_email = eList['promotor_email']
+
+            event = EventDAO.Event()
+            event.get(event_id).attend(promotor_email)
+            self.send_response(200)
+            self.end_headers()
+
 
     def do_GET(self):
 
@@ -66,7 +78,6 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
 
             selectOBJ=event.get(evID)
             partname=event.get(evID).list_participate()
-            print selectOBJ.__dict__
 
             makeHTML = createHTML.createHTML()
             res = makeHTML.detailHTML(evID,selectOBJ,partname)
