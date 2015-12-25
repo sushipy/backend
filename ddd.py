@@ -55,16 +55,12 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
 
-        event = EventDAO.Event()
-        eventlist = event.list()
-        cnt = len(eventlist)
-
         parsed_path = urlparse.urlparse(self.path)
 
         if 'showlist' in parsed_path.path:
 
             makeHTML = createHTML.createHTML()
-            res = makeHTML.showlistHTML(cnt,eventlist)
+            res = makeHTML.showlistHTML()
 
             self.send_response(200)
             self.send_header('Content-type', 'text/html;charset=utf-8')
@@ -72,6 +68,10 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             self.wfile.write(res)
 
         elif 'events' in parsed_path.path:
+
+            event = EventDAO.Event()
+            eventlist = event.list()
+            cnt = len(eventlist)
 
             eventID = parsed_path.path[8:]
             evID = int(eventID)
@@ -87,8 +87,32 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(res)
 
+    def do_DELETE(self):
+        print "DELETE"
+
+        parsed_path = urlparse.urlparse(self.path)
+        print parsed_path.path
+
+        if 'cancel' in parsed_path.path:
+            content_len = int(self.headers.get('content-length'))
+            requestBody = self.rfile.read(content_len).decode('UTF-8')
+            eList = json.loads(requestBody)
+
+            event_id = int(eList['event_id'])
+            promotor_email = eList['promotor_email']
+
+            event = EventDAO.Event()
+            event.get(event_id).attend(promotor_email,cancel=True)
+            
+            self.send_response(200)
+            self.end_headers()
+
+
+        elif parsed_path.path.find(''):
+            print "madamada"
+
 
 if __name__ == '__main__':
-    server = HTTPServer(('', 3389), JsonResponseHandler)
+    server = HTTPServer(('', 8001), JsonResponseHandler)
     print 'Starting server, use <Ctrl-C> to stop'
     server.serve_forever()

@@ -1,10 +1,11 @@
 # coding: utf-8
 
 import random
+import EventDAO
 
 class createHTML:
 
-	def showlistHTML(self,countOB,eventlist):
+	def showlistHTML(self):
 
 		response = '<!DOCTYPE html>\n'
 		response += '<html lang="ja">\n'
@@ -21,8 +22,8 @@ class createHTML:
 		response += '    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>\n'
 		response += '<style type="text/css" media="screen, projection">\n'
 		response += 'html {\n'
-                gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
-                gazou = random.choice(gazoulist)
+		gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
+		gazou = random.choice(gazoulist)
 		#response += '  background: url(http://file.www.appkids.net/SBhrN.jpg) no-repeat center center fixed;\n'
 		response += '  background: url(%s) no-repeat center center fixed;\n' % gazou
 		response += '  -webkit-background-size: cover;\n'
@@ -160,6 +161,10 @@ class createHTML:
 
 		#####################################################
 
+		event = EventDAO.Event()
+		eventlist = event.list()
+		countOB = len(eventlist)
+
 		if countOB > 0:
 			response += '    <div class="container-fluid">\n'
 			response += '      <div class="row">\n'
@@ -171,10 +176,14 @@ class createHTML:
 
 			ii=  1
 			for cc in range(countOBi):
+				stime = str(eventlist[countOB-ii].start_time).split(" ")
 				response += '        <div class="col-xs-6 col-sm-4 col-md-2">\n'
 				response += '          <h2>%s</h2>\n' % eventlist[countOB-ii].title.encode('UTF-8')
-				response += '          <h2>%s</h2>\n' % eventlist[countOB-ii].start_time
-				response += '          <p>%s</p>\n' % eventlist[countOB-ii].descri.encode('UTF-8')
+				response += '          <h3>%s<br>\n' % stime[0]
+				response += '          %s</h3>\n' % stime[1]
+				#response += '          <h2>%s</h2>\n' % eventlist[countOB-ii].start_time
+				response += '          <p>%s</p>\n' % eventlist[countOB-ii].descri.encode('UTF-8').replace('\n','<br>')
+				response += '          <p>%s / %s</p>\n' % (event.get(eventlist[countOB-ii].id).get_participate_num(),eventlist[countOB-ii].capacity)
 				response += '          <a class="btn btn-mini" href="/events/%s">&raquo; 詳細</a>\n' % eventlist[countOB-ii].id
 				response += '        </div>\n'
 				ii += 1
@@ -209,8 +218,8 @@ class createHTML:
 		response += '      type: "post",\n'
 		###response += '      url: "http://192.168.56.155:8001/create",\n'
 		###response += '      url: "http://10.194.23.240:8001/create",\n'
-		response += '      url: "http://10.194.23.241:3389/create",\n'
-		###response += '      url: "http://192.168.56.100:8001/create",\n'
+		###response += '      url: "http://10.194.23.241:3389/create",\n'
+		response += '      url: "http://192.168.56.100:8001/create",\n'
 		response += '      data: JSON.stringify(data),\n'
 		response += '      contentType: "application/json",\n'
 		response += '      dataType: "json",\n'
@@ -288,8 +297,8 @@ class createHTML:
 		response1 += '    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>\n'
 		response1 += '<style type="text/css" media="screen, projection">\n'
 		response1 += 'html {\n'
-                gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
-                gazou = random.choice(gazoulist)
+		gazoulist = ["http://file.www.appkids.net/SBhrN.jpg","http://free-photos-ls02.gatag.net/images/lgf01a201403240200.jpg"]
+		gazou = random.choice(gazoulist)
 		response1 += '  background: url(%s) no-repeat center center fixed;\n' % gazou
 		response1 += '  -webkit-background-size: cover;\n'
 		response1 += '  -moz-background-size: cover;\n'
@@ -336,11 +345,11 @@ class createHTML:
 		response1 += '      </table>\n'
 		response1 += '      <div class="box">\n'
 		response1 += '        <h3>内容</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.descri.encode('utf-8')
+		response1 += '        <p>%s</p>\n' % selectOBJ.descri.encode('utf-8').replace('\n','<br>')
 		response1 += '        <h3>アジェンダ</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.agenda.encode('utf-8')
+		response1 += '        <p>%s</p>\n' % selectOBJ.agenda.encode('utf-8').replace('\n','<br>')
 		response1 += '        <h3>注意事項</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.note.encode('utf-8')
+		response1 += '        <p>%s</p>\n' % selectOBJ.note.encode('utf-8').replace('\n','<br>')
 		##############################################
 		response1 += '        <h3>参加者</h3>\n'
 
@@ -350,7 +359,7 @@ class createHTML:
 		#
 		#
 		##############################################
-		response1 += '        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#joinEvent">参加</button>\n'
+		response1 += '        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#joinEvent">参加・不参加</button>\n'
 		response1 += '      </div>\n'
 		response1 += '      <div class="modal" id="joinEvent" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">\n'
 		response1 += '        <div class="modal-dialog">\n'
@@ -370,7 +379,7 @@ class createHTML:
 		response1 += '                    <input type="hidden" id="eventId" value="%s">\n' % eventID
 		response1 += '                  </div>\n'
 		response1 += '                <button type="submit" id="sendRegister" class="btn btn-primary">イベントへ参加</button>\n'
-#		response1 += '                <button type="submit" id="sendUnRegister" class="btn">参加をキャンセル</button>\n'
+		response1 += '                <button type="submit" id="sendUnRegister" class="btn">参加をキャンセル</button>\n'
 		response1 += '                <input type="hidden" id="eventId" value="%s">\n' % eventID
 		response1 += '              </form>\n'
 		response1 += '            </div>\n'
@@ -395,7 +404,8 @@ class createHTML:
 		response1 += '      type: "post",\n'
 		###response1 += '      url: "http://192.168.56.155:8001/events/%s",\n' %eventID
 		###response1 += '      url: "http://10.194.23.240:8001/events/%s",\n' %eventID
-		response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
+		###response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
+		response1 += '      url: "http://192.168.56.100:8001/events/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'
@@ -416,39 +426,39 @@ class createHTML:
 		response1 += '      timeout: 1000\n'
 		response1 += '    });\n'
 		response1 += '  });\n'
-#		response1 += '  $("#sendUnRegister").click(function() {\n'
-#		response1 += '    // 多重送信を防ぐため通信完了までボタンをdisableにする\n'
-#		response1 += '    var button = $(this);\n'
-#		response1 += '    button.attr("disabled", true);\n'
-#		response1 += '    // 各フィールドから値を取得してJSONデータを作成\n'
-#		response1 += '    var data = {\n'
-#		response1 += '      promotor_email: $("#sendEmail").val(),\n'
-#		response1 += '      evnet_id: $("#eventId").val()\n'
-#		response1 += '    };\n'
-#		response1 += '    // 通信実行\n'
-#		response1 += '    $.ajax({\n'
-#		response1 += '      type: "delete",\n'
-#		response1 += '      url: "http://192.168.56.155:8001/events/" + eventId,\n'
-#		response1 += '      data: JSON.stringify(data),\n'
-#		response1 += '      contentType: "application/json",\n'
-#		response1 += '      dataType: "json",\n'
-#		response1 += '      success: function(json_data) {\n'
+		response1 += '  $("#sendUnRegister").click(function() {\n'
+		response1 += '    // 多重送信を防ぐため通信完了までボタンをdisableにする\n'
+		response1 += '    var button = $(this);\n'
+		response1 += '    button.attr("disabled", true);\n'
+		response1 += '    // 各フィールドから値を取得してJSONデータを作成\n'
+		response1 += '    var data = {\n'
+		response1 += '      promotor_email: $("#sendEmail").val(),\n'
+		response1 += '      event_id: $("#eventId").val()\n'
+		response1 += '    };\n'
+		response1 += '    // 通信実行\n'
+		response1 += '    $.ajax({\n'
+		response1 += '      type: "delete",\n'
+		response1 += '      url: "http://192.168.56.100:8001/events/cancel/%s",\n' %eventID
+		response1 += '      data: JSON.stringify(data),\n'
+		response1 += '      contentType: "application/json",\n'
+		response1 += '      dataType: "json",\n'
+		response1 += '      success: function(json_data) {\n'
 #		response1 += '        if (!json_data[0]) {\n'
 #		response1 += '          alert("Transaction error. " + json_data[1]);\n'
 #		response1 += '          return;\n'
 #		response1 += '        }\n'
-#		response1 += '        // 成功時処理\n'
-#		response1 += '        location.reload();\n'
-#		response1 += '      },\n'
-#		response1 += '      error: function() {\n'
-#		response1 += '        alert("Server Error. Pleasy try again later.");\n'
-#		response1 += '      },\n'
-#		response1 += '      complete: function() { //通信が終了した際の処理\n'
-#		response1 += '        button.attr("disabled", false);\n'
-#		response1 += '      },\n'
-#		response1 += '      timeout: 1000\n'
-#		response1 += '    });\n'
-#		response1 += '  });\n'
+		response1 += '        // 成功時処理\n'
+		response1 += '        location.reload();\n'
+		response1 += '      },\n'
+		response1 += '      error: function() {\n'
+		response1 += '        alert("Server Error. Pleasy try again later.");\n'
+		response1 += '      },\n'
+		response1 += '      complete: function() { //通信が終了した際の処理\n'
+		response1 += '        button.attr("disabled", false);\n'
+		response1 += '      },\n'
+		response1 += '      timeout: 1000\n'
+		response1 += '    });\n'
+		response1 += '  });\n'
 		response1 += '});\n'
 		response1 += '    </script>\n'
 		response1 += '    <footer>\n'
