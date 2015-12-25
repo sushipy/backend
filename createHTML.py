@@ -166,9 +166,7 @@ class createHTML:
 				countOBi = countOB
 
 			ii=  1
-			print countOBi
 			for cc in range(countOBi):
-				print countOB-ii
 				response += '        <div class="col-xs-6 col-sm-4 col-md-2">\n'
 				response += '          <h2>%s</h2>\n' % eventlist[countOB-ii].title.encode('UTF-8')
 				response += '          <h2>%s</h2>\n' % eventlist[countOB-ii].start_time
@@ -207,7 +205,8 @@ class createHTML:
 		response += '      type: "post",\n'
 		###response += '      url: "http://192.168.56.155:8001/create",\n'
 		###response += '      url: "http://10.194.23.240:8001/create",\n'
-		response += '      url: "http://192.168.56.100:8001/create",\n'
+		response += '      url: "http://10.194.23.241:3389/create",\n'
+		###response += '      url: "http://192.168.56.100:8001/create",\n'
 		response += '      data: JSON.stringify(data),\n'
 		response += '      contentType: "application/json",\n'
 		response += '      dataType: "json",\n'
@@ -320,27 +319,27 @@ class createHTML:
 		response1 += '        </thread>\n'
 		response1 += '        <tbody>\n'
 		response1 += '          <tr>\n'
-		response1 += '            <td>%s</td>\n' % selectOBJ.title
+		response1 += '            <td>%s</td>\n' % selectOBJ.title.encode('utf-8')
 		response1 += '            <td>%s</td>\n' % selectOBJ.start_time
 		response1 += '            <td>%s</td>\n' % selectOBJ.end_time
-		response1 += '            <td>%s</td>\n' % selectOBJ.room
-		response1 += '            <td>%s</td>\n' % selectOBJ.promotor_name
-		response1 += '            <td>%s</td>\n' % selectOBJ.promotor_mail
+		response1 += '            <td>%s</td>\n' % selectOBJ.room.encode('utf-8')
+		response1 += '            <td>%s</td>\n' % selectOBJ.promotor_name.encode('utf-8')
+		response1 += '            <td>%s</td>\n' % selectOBJ.promotor_mail.encode('utf-8')
 		response1 += '          </tr>\n'
 		response1 += '        </tbody>\n'
 		response1 += '      </table>\n'
 		response1 += '      <div class="box">\n'
 		response1 += '        <h3>内容</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.descri
+		response1 += '        <p>%s</p>\n' % selectOBJ.descri.encode('utf-8')
 		response1 += '        <h3>アジェンダ</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.agenda
+		response1 += '        <p>%s</p>\n' % selectOBJ.agenda.encode('utf-8')
 		response1 += '        <h3>注意事項</h3>\n'
-		response1 += '        <p>%s</p>\n' % selectOBJ.note
+		response1 += '        <p>%s</p>\n' % selectOBJ.note.encode('utf-8')
 		##############################################
 		response1 += '        <h3>参加者</h3>\n'
 
 		for dd in partname:
-			response1 += '        <p>%s</p>\n' % dd
+			response1 += '        <p>%s</p>\n' % dd.encode('utf-8')
 		#
 		#
 		#

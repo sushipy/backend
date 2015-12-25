@@ -64,12 +64,10 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             eventID = parsed_path.path[8:]
             evID = int(eventID)
 
-            for i in eventlist:
-                if i.id == evID:
-                    selectOBJ = i
-
+            selectOBJ=event.get(evID)
+            partname=event.get(evID).list_participate()
             print selectOBJ.__dict__
-            partname = event.list_participate(selectOBJ.id)
+
             makeHTML = createHTML.createHTML()
             res = makeHTML.detailHTML(evID,selectOBJ,partname)
 
@@ -80,6 +78,6 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-    server = HTTPServer(('', 8001), JsonResponseHandler)
+    server = HTTPServer(('', 3389), JsonResponseHandler)
     print 'Starting server, use <Ctrl-C> to stop'
     server.serve_forever()
