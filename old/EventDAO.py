@@ -246,19 +246,6 @@ class Event:
         c.execute(stmt, [self.id])
         return c.fetchone()[0]
 
-    def del_event(self):
-        """
-        ID指定でEventインスタンスを取得
-        @param  selef
-        @return 処理が成功したかどうかのbool値
-        """
-        db_conn = _DataAccess.get_db_conn()
-        c = db_conn.cursor()
-        stmt = 'DELETE FROM event WHERE id = %s'
-        c.execute(stmt,[self.id])
-        db_conn.commit()
-        return True
-
     @classmethod
     def list_from_now(cls, **kwargs):
         """

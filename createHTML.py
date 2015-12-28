@@ -218,8 +218,8 @@ class createHTML:
 		response += '      type: "post",\n'
 		###response += '      url: "http://192.168.56.155:8001/create",\n'
 		###response += '      url: "http://10.194.23.240:8001/create",\n'
-		###response += '      url: "http://10.194.23.241:3389/create",\n'
-		response += '      url: "http://192.168.56.100:8001/create",\n'
+		response += '      url: "http://10.194.23.241:3389/create",\n'
+		###response += '      url: "http://192.168.56.100:8001/create",\n'
 		response += '      data: JSON.stringify(data),\n'
 		response += '      contentType: "application/json",\n'
 		response += '      dataType: "json",\n'
@@ -404,8 +404,8 @@ class createHTML:
 		response1 += '      type: "post",\n'
 		###response1 += '      url: "http://192.168.56.155:8001/events/%s",\n' %eventID
 		###response1 += '      url: "http://10.194.23.240:8001/events/%s",\n' %eventID
-		###response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
-		response1 += '      url: "http://192.168.56.100:8001/events/%s",\n' %eventID
+		response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
+		###response1 += '      url: "http://192.168.56.100:8001/events/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'
@@ -438,7 +438,8 @@ class createHTML:
 		response1 += '    // 通信実行\n'
 		response1 += '    $.ajax({\n'
 		response1 += '      type: "delete",\n'
-		response1 += '      url: "http://192.168.56.100:8001/events/cancel/%s",\n' %eventID
+		###response1 += '      url: "http://192.168.56.100:8001/events/cancel/%s",\n' %eventID
+		response1 += '      url: "http://10.194.23.241:3389/events/cancel/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'

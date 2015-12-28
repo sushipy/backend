@@ -18,4 +18,5 @@ CREATE TABLE `participate_history` (
   `participant_name` varchar(255) DEFAULT NULL,
   KEY `id` (`id`),
   CONSTRAINT `participate_history_ibfk_1` FOREIGN KEY (`id`) REFERENCES `event` (`id`)
+  on update cascade on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
