@@ -218,8 +218,8 @@ class createHTML:
 		response += '      type: "post",\n'
 		###response += '      url: "http://192.168.56.155:8001/create",\n'
 		###response += '      url: "http://10.194.23.240:8001/create",\n'
-		response += '      url: "http://10.194.23.241:3389/create",\n'
-		###response += '      url: "http://192.168.56.100:8001/create",\n'
+		###response += '      url: "http://10.194.23.241:3389/create",\n'
+		response += '      url: "http://192.168.56.100:8001/create",\n'
 		response += '      data: JSON.stringify(data),\n'
 		response += '      contentType: "application/json",\n'
 		response += '      dataType: "json",\n'
@@ -361,6 +361,29 @@ class createHTML:
 		##############################################
 		response1 += '        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#joinEvent">参加・不参加</button>\n'
 		response1 += '      </div>\n'
+
+		response1 += '      <hr>\n'
+		response1 += '      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#deleteEvent">イベント削除</button>\n'
+
+		response1 += '      <!-- イベント削除 -->\n'
+		response1 += '      <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\n'
+		response1 += '        <div class="modal-dialog">\n'
+		response1 += '          <div class="modal-content">\n'
+		response1 += '            <div class="modal-header">\n'
+		response1 += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n'
+		response1 += '              <h4 class="modal-title" id="eventTitle">イベントを削除する</h4>\n'
+		response1 += '            </div>\n'
+		response1 += '            <div class="modal-body">\n'
+		response1 += '              <form id="deleteForm">\n'
+		response1 += '              <p>本当に削除してもよろしいですか？</p>\n'
+		response1 += '                <button type="submit" id="deleteFormInfo" class="btn btn-primary">イベント削除</button>\n'
+		response1 += '                <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>\n'
+		response1 += '              </form>\n'
+		response1 += '            </div>\n'
+		response1 += '          </div>\n'
+		response1 += '        </div>\n'
+		response1 += '      </div>\n'
+
 		response1 += '      <div class="modal" id="joinEvent" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">\n'
 		response1 += '        <div class="modal-dialog">\n'
 		response1 += '          <div class="modal-content">\n'
@@ -404,8 +427,8 @@ class createHTML:
 		response1 += '      type: "post",\n'
 		###response1 += '      url: "http://192.168.56.155:8001/events/%s",\n' %eventID
 		###response1 += '      url: "http://10.194.23.240:8001/events/%s",\n' %eventID
-		response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
-		###response1 += '      url: "http://192.168.56.100:8001/events/%s",\n' %eventID
+		###response1 += '      url: "http://10.194.23.241:3389/events/%s",\n' %eventID
+		response1 += '      url: "http://192.168.56.100:8001/events/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'
@@ -438,8 +461,8 @@ class createHTML:
 		response1 += '    // 通信実行\n'
 		response1 += '    $.ajax({\n'
 		response1 += '      type: "delete",\n'
-		###response1 += '      url: "http://192.168.56.100:8001/events/cancel/%s",\n' %eventID
-		response1 += '      url: "http://10.194.23.241:3389/events/cancel/%s",\n' %eventID
+		response1 += '      url: "http://192.168.56.100:8001/events/cancel/%s",\n' %eventID
+		###response1 += '      url: "http://10.194.23.241:3389/events/cancel/%s",\n' %eventID
 		response1 += '      data: JSON.stringify(data),\n'
 		response1 += '      contentType: "application/json",\n'
 		response1 += '      dataType: "json",\n'
@@ -450,6 +473,39 @@ class createHTML:
 #		response1 += '        }\n'
 		response1 += '        // 成功時処理\n'
 		response1 += '        location.reload();\n'
+		response1 += '      },\n'
+		response1 += '      error: function() {\n'
+		response1 += '        alert("Server Error. Pleasy try again later.");\n'
+		response1 += '      },\n'
+		response1 += '      complete: function() { //通信が終了した際の処理\n'
+		response1 += '        button.attr("disabled", false);\n'
+		response1 += '      },\n'
+		response1 += '      timeout: 1000\n'
+		response1 += '    });\n'
+		response1 += '  });\n'
+		response1 += '  $("#deleteFormInfo").click(function() {\n'
+		response1 += '    var button = $(this);\n'
+		response1 += '    button.attr("disabled", true);\n'
+		response1 += '    // 各フィールドから値を取得してJSONデータを作成\n'
+		response1 += '    var data = {\n'
+		response1 += '      event_id: $("#eventId").val(),\n'
+#		response1 += '      promotor_email: $("#eventPromoEmail").val()\n'
+		response1 += '    };\n'
+		response1 += '    // 通信実行\n'
+		response1 += '    $.ajax({\n'
+		response1 += '      type: "delete",\n'
+		response1 += '      url: "http://192.168.56.100:8001/events/delete/%s",\n' %eventID
+		response1 += '      data: JSON.stringify(data),\n'
+		response1 += '      contentType: "application/json",\n'
+		response1 += '      dataType: "json",\n'
+		response1 += '      success: function(json_data) {\n'
+#		response1 += '        if (!json_data[0]) {\n'
+#		response1 += '          alert("Transaction error. " + json_data[1]);\n'
+#		response1 += '          return;\n'
+#		response1 += '        }\n'
+		response1 += '        // 成功時処理\n'
+#		response1 += '        location.reload();\n'
+		response1 += '        location.replace("http://192.168.56.100:8001/showlist/");\n'
 		response1 += '      },\n'
 		response1 += '      error: function() {\n'
 		response1 += '        alert("Server Error. Pleasy try again later.");\n'

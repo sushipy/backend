@@ -108,11 +108,19 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
 
-        elif parsed_path.path.find(''):
-            print "madamada"
+        elif 'delete' in parsed_path.path:
+            content_len = int(self.headers.get('content-length'))
+            requestBody = self.rfile.read(content_len).decode('UTF-8')
+            eList = json.loads(requestBody)
+            event_id = int(eList['event_id'])
 
+            event = EventDAO.Event()
+            event.get(event_id).del_event()
+
+            self.send_response(200)
+            self.end_headers()
 
 if __name__ == '__main__':
-    server = HTTPServer(('', 3389), JsonResponseHandler)
+    server = HTTPServer(('', 8001), JsonResponseHandler)
     print 'Starting server, use <Ctrl-C> to stop'
     server.serve_forever()
