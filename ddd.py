@@ -6,6 +6,14 @@ from BaseHTTPServer import HTTPServer
 import EventDAO
 import urlparse
 import createHTML
+import datetime
+
+class MyJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return str(obj)
+        else:
+            return super(self.__class__, self).default(obj)
 
 class JsonResponseHandler(BaseHTTPRequestHandler):
 
@@ -87,11 +95,62 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(res)
 
+        elif 'api/v1/alllist' in parsed_path.path:
+            event = EventDAO.Event()
+            eventlist = event.list()
+            aaa=[]
+            for bbb in eventlist:
+                aaa.append(bbb.__dict__)
+            res = json.dumps(aaa,indent=4,encoding='utf8',cls=MyJSONEncoder)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/json')
+            self.end_headers()
+            self.wfile.write(res)
+
+        elif 'api/v1/nowlist' in parsed_path.path:
+            event = EventDAO.Event()
+            eventlist = event.list_from_now()
+            aaa=[]
+            for bbb in eventlist:
+                aaa.append(bbb.__dict__)
+            res = json.dumps(aaa,indent=4,encoding='utf8',cls=MyJSONEncoder)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/json')
+            self.end_headers()
+            self.wfile.write(res)
+
+        elif 'api/v1/showevent' in parsed_path.path:
+            eventID = int(parsed_path.path[18:])
+
+            event = EventDAO.Event()
+            eventlist=event.get(eventID)
+            res = json.dumps(eventlist.__dict__,indent=4,encoding='utf8',cls=MyJSONEncoder)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/json')
+            self.end_headers()
+            self.wfile.write(res)
+
+        elif 'api/v1/partlist' in parsed_path.path:
+            eventID = int(parsed_path.path[17:])
+
+            event = EventDAO.Event()
+            eventlist=event.get(eventID).list_participate()
+            res = json.dumps(eventlist,indent=4,encoding='utf8',cls=MyJSONEncoder)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/json')
+            self.end_headers()
+            self.wfile.write(res)
+
+        else:
+            self.send_error(404)
+
     def do_DELETE(self):
-        print "DELETE"
 
         parsed_path = urlparse.urlparse(self.path)
-        print parsed_path.path
 
         if 'cancel' in parsed_path.path:
             content_len = int(self.headers.get('content-length'))
