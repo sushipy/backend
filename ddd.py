@@ -121,6 +121,6 @@ class JsonResponseHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
 if __name__ == '__main__':
-    server = HTTPServer(('', 8001), JsonResponseHandler)
+    server = HTTPServer(('', 3389), JsonResponseHandler)
     print 'Starting server, use <Ctrl-C> to stop'
     server.serve_forever()
