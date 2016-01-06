@@ -20,4 +20,4 @@ mysql BMI22 -u bmi22 -pbmi22 -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306
 pip install -r /src/requirements.txt
 
 # アプリ起動
-# ＊こちらは未定義　環境に合わせて記載＊
+cd /src ; python ddd.py
