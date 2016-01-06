@@ -364,6 +364,7 @@ class createHTML:
 
 		response1 += '      <hr>\n'
 		response1 += '      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#deleteEvent">イベント削除</button>\n'
+		response1+= '       <a class="btn btn-mini" href="http://10.194.23.241:3389/showlist/">&raquo; 戻る</a>'
 
 		response1 += '      <!-- イベント削除 -->\n'
 		response1 += '      <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\n'
